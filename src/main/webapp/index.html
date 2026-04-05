@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CinePlex – Movie Ticket Booking</title>
+  <meta name="description" content="Book your movie tickets online with CinePlex. Choose your movie, show time, and seats in seconds." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ── NAV ───────────────────────────────────────────────────────── -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-brand">
+      <span class="brand-icon">🎬</span>
+      <span class="brand-name">CinePlex</span>
+    </div>
+    <div class="nav-stepper" id="stepperNav">
+      <div class="step active" id="step-nav-1" data-label="Movies">1</div>
+      <div class="step-line"></div>
+      <div class="step" id="step-nav-2" data-label="Shows">2</div>
+      <div class="step-line"></div>
+      <div class="step" id="step-nav-3" data-label="Seats">3</div>
+      <div class="step-line"></div>
+      <div class="step" id="step-nav-4" data-label="Confirm">4</div>
+    </div>
+    <div class="nav-right">
+      <button class="btn-ghost" id="viewBookingsBtn">📋 My Bookings</button>
+    </div>
+  </nav>
+
+  <!-- ── HERO ──────────────────────────────────────────────────────── -->
+  <header class="hero" id="heroSection">
+    <div class="hero-particles" id="heroParticles"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Your Cinema, Your Way</p>
+      <h1 class="hero-title">Book Tickets<br/><span class="gradient-text">Instantly</span></h1>
+      <p class="hero-sub">Choose your movie, pick your seat, enjoy the magic.</p>
+      <button class="btn-primary hero-cta" id="heroCta">
+        <span>Browse Movies</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+    <div class="hero-visual">
+      <div class="film-strip">
+        <div class="film-frame f1"></div>
+        <div class="film-frame f2"></div>
+        <div class="film-frame f3"></div>
+        <div class="film-hole top"></div>
+        <div class="film-hole bottom"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── MAIN CONTENT ───────────────────────────────────────────────── -->
+  <main class="main-wrap">
+
+    <!-- STEP 1: Movies -->
+    <section class="view active" id="view-movies">
+      <div class="section-header">
+        <h2>Now Showing</h2>
+        <p>Select a movie to continue</p>
+      </div>
+      <div class="movie-grid" id="movieGrid"></div>
+    </section>
+
+    <!-- STEP 2: Shows -->
+    <section class="view" id="view-shows">
+      <button class="btn-back" id="backToMovies">← Back to Movies</button>
+      <div class="section-header">
+        <h2 id="showsMovieTitle">Select a Show</h2>
+        <p id="showsMovieMeta"></p>
+      </div>
+      <div class="shows-grid" id="showsGrid"></div>
+    </section>
+
+    <!-- STEP 3: Seats -->
+    <section class="view" id="view-seats">
+      <button class="btn-back" id="backToShows">← Back to Shows</button>
+      <div class="section-header">
+        <h2 id="seatsTitle">Choose Your Seats</h2>
+        <p id="seatsMeta"></p>
+      </div>
+      <!-- Seat Map -->
+      <div class="seat-container">
+        <div class="screen-wrap">
+          <div class="screen-bar">🎞 SCREEN</div>
+          <div class="screen-glow"></div>
+        </div>
+        <div class="seat-legend">
+          <span class="legend-item"><span class="dot available"></span> Available</span>
+          <span class="legend-item"><span class="dot selected"></span> Selected</span>
+          <span class="legend-item"><span class="dot booked"></span> Booked</span>
+        </div>
+        <div class="seat-grid" id="seatGrid"></div>
+      </div>
+      <!-- Selection summary -->
+      <div class="selection-panel" id="selectionPanel">
+        <div class="selection-info">
+          <span id="selectedCount">0 seats selected</span>
+          <span class="price-tag" id="totalPrice">₹ 0</span>
+        </div>
+        <button class="btn-primary" id="proceedToConfirm" disabled>
+          Proceed to Confirm →
+        </button>
+      </div>
+    </section>
+
+    <!-- STEP 4: Confirm -->
+    <section class="view" id="view-confirm">
+      <button class="btn-back" id="backToSeats">← Change Seats</button>
+      <div class="section-header">
+        <h2>Confirm Booking</h2>
+        <p>Review your selection before paying</p>
+      </div>
+      <div class="confirm-layout">
+        <div class="confirm-card" id="confirmCard">
+          <div class="confirm-row">
+            <span class="confirm-label">🎥 Movie</span>
+            <span class="confirm-value" id="c-movie"></span>
+          </div>
+          <div class="confirm-row">
+            <span class="confirm-label">🎭 Genre</span>
+            <span class="confirm-value" id="c-genre"></span>
+          </div>
+          <div class="confirm-row">
+            <span class="confirm-label">⏱ Duration</span>
+            <span class="confirm-value" id="c-duration"></span>
+          </div>
+          <div class="confirm-divider"></div>
+          <div class="confirm-row">
+            <span class="confirm-label">📅 Date & Time</span>
+            <span class="confirm-value" id="c-showtime"></span>
+          </div>
+          <div class="confirm-row">
+            <span class="confirm-label">🏛 Screen</span>
+            <span class="confirm-value" id="c-screen"></span>
+          </div>
+          <div class="confirm-divider"></div>
+          <div class="confirm-row">
+            <span class="confirm-label">🪑 Seats</span>
+            <span class="confirm-value seats-value" id="c-seats"></span>
+          </div>
+          <div class="confirm-row total-row">
+            <span class="confirm-label">💳 Total</span>
+            <span class="confirm-value total-amount" id="c-total"></span>
+          </div>
+        </div>
+        <div class="confirm-form">
+          <label class="form-label" for="userNameInput">Your Name</label>
+          <input type="text" id="userNameInput" class="form-input"
+                 placeholder="Enter your full name" autocomplete="name" />
+          <label class="form-label" for="userEmailInput">Email (optional)</label>
+          <input type="email" id="userEmailInput" class="form-input"
+                 placeholder="you@example.com" autocomplete="email" />
+          <button class="btn-primary btn-full" id="confirmBookingBtn">
+            🎟 Confirm & Book Now
+          </button>
+          <p class="form-note">No payment needed – this is a demo booking system</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 5: Ticket -->
+    <section class="view" id="view-ticket">
+      <div class="ticket-success">
+        <div class="success-icon">✅</div>
+        <h2>Booking Confirmed!</h2>
+        <p>Your ticket is ready. Enjoy the show! 🍿</p>
+      </div>
+      <div class="ticket-wrap" id="ticketWrap">
+        <div class="ticket" id="ticket">
+          <div class="ticket-top">
+            <div class="ticket-brand">🎬 CinePlex</div>
+            <div class="ticket-id" id="t-bookingId">#00000</div>
+          </div>
+          <div class="ticket-movie" id="t-movie">Movie Name</div>
+          <div class="ticket-meta-grid">
+            <div class="ticket-meta-item">
+              <span class="tm-label">DATE</span>
+              <span class="tm-val" id="t-date"></span>
+            </div>
+            <div class="ticket-meta-item">
+              <span class="tm-label">TIME</span>
+              <span class="tm-val" id="t-time"></span>
+            </div>
+            <div class="ticket-meta-item">
+              <span class="tm-label">SCREEN</span>
+              <span class="tm-val" id="t-screen"></span>
+            </div>
+            <div class="ticket-meta-item">
+              <span class="tm-label">GENRE</span>
+              <span class="tm-val" id="t-genre"></span>
+            </div>
+          </div>
+          <div class="ticket-divider">
+            <div class="tear-notch left"></div>
+            <div class="tear-line"></div>
+            <div class="tear-notch right"></div>
+          </div>
+          <div class="ticket-seat-section">
+            <div class="ticket-meta-item">
+              <span class="tm-label">SEATS</span>
+              <span class="tm-val seats-big" id="t-seats"></span>
+            </div>
+            <div class="ticket-meta-item">
+              <span class="tm-label">GUEST</span>
+              <span class="tm-val" id="t-guest"></span>
+            </div>
+            <div class="ticket-meta-item">
+              <span class="tm-label">TOTAL</span>
+              <span class="tm-val price-green" id="t-total"></span>
+            </div>
+          </div>
+          <div class="ticket-barcode">
+            <div class="barcode-lines" id="barcodeLines"></div>
+            <div class="barcode-num" id="t-barcodeNum"></div>
+          </div>
+        </div>
+      </div>
+      <div class="ticket-actions">
+        <button class="btn-primary" id="printTicketBtn">🖨 Print Ticket</button>
+        <button class="btn-ghost" id="bookAnotherBtn">🎬 Book Another</button>
+      </div>
+    </section>
+
+    <!-- MY BOOKINGS MODAL -->
+    <div class="modal-overlay" id="bookingsModal">
+      <div class="modal">
+        <div class="modal-header">
+          <h3>📋 All Bookings</h3>
+          <button class="modal-close" id="closeBookingsModal">✕</button>
+        </div>
+        <div class="modal-body" id="bookingsModalBody"></div>
+      </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div class="toast" id="toast"></div>
+
+  </main>
+
+  <footer class="footer">
+    <p>🎬 CinePlex &copy; 2026 &nbsp;|&nbsp; Movie Ticket Booking System &nbsp;|&nbsp; Built with JDBC + MySQL</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
