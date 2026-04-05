@@ -1,0 +1,6 @@
+[build]
+  # The directory where your static files (index.html, app.js, etc.) are located
+  publish = "src/main/webapp"
+  
+  # Since it's vanilla HTML/JS/CSS, no build command is needed
+  command = ""
