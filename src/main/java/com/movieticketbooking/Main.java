@@ -22,7 +22,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
 
         // ── Mode selection ────────────────────────────────────────────────────
-        boolean serveMode = Arrays.asList(args).contains("--serve");
+        boolean serveMode = true; // ALWAYS start REST API server for live deployment
 
         if (serveMode) {
             System.out.println("\n  🌐  Starting CinePlex in SERVER mode...");
