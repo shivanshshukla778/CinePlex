@@ -55,11 +55,11 @@ public class ApiServer {
     public static void start() throws IOException {
         // Locate src/main/webapp relative to working directory
         Path candidate = Path.of("src", "main", "webapp");
-        if (Files.isDirectory(candidate)) {
+        if (Files.isDirectory(candidate) && Files.exists(candidate.resolve("index.html"))) {
             webappDir = candidate.toAbsolutePath();
         } else {
-            // Fallback: next to the JAR
-            webappDir = Path.of("webapp").toAbsolutePath();
+            // Fallback: next to the JAR or root
+            webappDir = Path.of(".").toAbsolutePath();
         }
 
         HttpServer server = HttpServer.create(new InetSocketAddress(PORT), 0);
